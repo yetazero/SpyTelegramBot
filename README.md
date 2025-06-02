@@ -26,20 +26,19 @@ A series of utility commands for interactive engagement is included:
 * `pystray` library for system tray functionality.
 
 Required Python packages can be installed using pip:
-```bash
-pip install python-telegram-bot Pillow pystray```
+`pip install python-telegram-bot Pillow pystray`
 Configuration
-Creating config.ini
+Creating `config.ini`
 In the root directory of the project, create a file named config.ini with the following content:
 
 Ini, TOML
 
 [Bot]
-TOKEN = YOUR_BOT_TOKEN
-ADMIN_ID = YOUR_TELEGRAM_ADMIN_ID
+`TOKEN = YOUR_BOT_TOKEN`
+`ADMIN_ID = YOUR_TELEGRAM_ADMIN_ID`
 
 [Settings]
-MESSAGE_LIFETIME = 86400 ; Messages will be stored for the specified number of seconds (e.g., 24 hours)
+MESSAGE_LIFETIME = `86400` ; Messages will be stored for the specified number of seconds (e.g., 24 hours)
 Replace YOUR_BOT_TOKEN with the API token obtained from BotFather in Telegram.
 Replace YOUR_TELEGRAM_ADMIN_ID with your Telegram user ID. Messages and notifications will be forwarded to this ID when monitoring mode is activated.
 Starting the Bot
