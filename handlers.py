@@ -843,7 +843,6 @@ async def check_deleted_messages(context: ContextTypes.DEFAULT_TYPE):
     
     try:
         for key, message_data in list(message_store.messages.items()):
-            # Пропускаем уже обработанные удаленные сообщения
             if message_data.get('deleted'):
                 continue
                 
@@ -854,11 +853,9 @@ async def check_deleted_messages(context: ContextTypes.DEFAULT_TYPE):
             
             message = message_data['message']
             
-            # Проверяем, не от администратора ли сообщение
             user_id = message.from_user.id if message.from_user else None
             if user_id and str(user_id) == str(ADMIN_ID):
                 logger.info(f"Skipping message {message_id} from admin user {user_id}")
-                # Удаляем сообщение админа из отслеживания
                 del message_store.messages[key]
                 continue
             
@@ -866,19 +863,15 @@ async def check_deleted_messages(context: ContextTypes.DEFAULT_TYPE):
             current_time = datetime.now(timezone.utc)
             time_diff = (current_time - original_date).total_seconds()
             
-            # Увеличиваем время ожидания перед проверкой
-            if time_diff < 120:  # 2 минуты вместо 30 секунд
+            if time_diff < 120:
                 logger.info(f"Message {message_id} is too recent ({time_diff:.1f} sec), skipping check")
                 continue
             
-            # Добавляем счетчик проверок
             message_data['check_count'] = message_data.get('check_count', 0) + 1
             
-            # Проверяем только каждое третье сообщение
             if message_data['check_count'] % 3 != 1:
                 continue
                 
-            # После 10 проверок прекращаем отслеживание
             if message_data['check_count'] > 10:
                 logger.info(f"Message {message_id} checked {message_data['check_count']} times, removing from tracking")
                 del message_store.messages[key]
@@ -891,23 +884,17 @@ async def check_deleted_messages(context: ContextTypes.DEFAULT_TYPE):
                 
                 is_deleted = False
                 
-                # Проверяем существование сообщения с помощью прямого запроса
                 try:
                     try:
-                        # Проверяем, что чат доступен
                         await context.bot.get_chat(chat_id=chat_id)
                         
-                        # Вместо copy_message используем forward_message, чтобы проверить существование
-                        # Создаем временный чат для проверки
                         try:
-                            # Пытаемся получить сообщение напрямую
                             await context.bot.get_message(
                                 chat_id=chat_id,
                                 message_id=message_id
                             )
                             logger.debug(f"Message {message_id} still exists (get_message successful)")
                         except Exception as e:
-                            # Если get_message не работает, пробуем копирование
                             try:
                                 await context.bot.copy_message(
                                     chat_id=chat_id,
