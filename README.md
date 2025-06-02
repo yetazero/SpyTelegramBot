@@ -45,22 +45,22 @@ Starting the Bot
 Using the Command Line (For testing or non-GUI environments)
 The bot can be launched directly from the command line using run.py. This method is preferable for server environments or when a graphical interface is not available.
 
-Bash
 
-python run.py
+Start:
+`python run.py`
 To stop the bot launched via run.py, typically the Ctrl+C key combination is used.
 
 ### Bot Commands
 The following commands can be used in Telegram chats with the bot:
 
-/start: Initializes the bot.
-/spy_on: (Admin only) Activates message monitoring mode.
-/spy_off: (Admin only) Deactivates message monitoring mode.
-/get_state: (Admin only) Displays the current state of the monitoring mode.
-/random cube: Generates a random number, simulating a six-sided die roll.
-/random yn: Provides a random 'Yes' or 'No' answer.
-/random q: Functions as a 'Magic 8-Ball'.
-/random r: Simulates a game of 'Russian roulette'.
+`/start`: Initializes the bot.
+`/spy_on`: (Admin only) Activates message monitoring mode.
+`/spy_off`: (Admin only) Deactivates message monitoring mode.
+`/get_state`: (Admin only) Displays the current state of the monitoring mode.
+`/random cube`: Generates a random number, simulating a six-sided die roll.
+`/random yn`: Provides a random 'Yes' or 'No' answer.
+`/random q`: Functions as a 'Magic 8-Ball'.
+`/random r`: Simulates a game of 'Russian roulette'.
 ### Instructions for Using Monitoring Mode
 Ensure your ADMIN_ID is correctly specified in config.ini.
 Start the bot using start_spy_bot.py or run.py.
